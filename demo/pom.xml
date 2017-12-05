@@ -1,0 +1,496 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.demo</groupId>
+    <artifactId>demo</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>../kafka</module>
+    </modules>
+    <name>demo Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+
+
+    <properties>
+
+        <!-- ssm 相关 begin -->
+
+        <!-- base setting -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.locales>zh_CN</project.build.locales>
+        <project.build.jdk>1.8</project.build.jdk>
+
+        <!-- plugins -->
+        <mybatis.generator.maven.plugin.version>1.3.2</mybatis.generator.maven.plugin.version>
+        <plugin.maven-compiler>3.1</plugin.maven-compiler>
+
+        <mybatis.generator.generatorConfig.xml>/src/main/resources/ssm/generatorConfig.xml</mybatis.generator.generatorConfig.xml>
+
+        <!-- Spring -->
+        <spring.version>4.0.2.RELEASE</spring.version>
+        <!-- Mybatis -->
+        <mybatis.version>3.2.6</mybatis.version>
+        <!-- log4j日志文件管理包版本 -->
+        <slf4j.version>1.7.7</slf4j.version>
+        <log4j.version>1.2.17</log4j.version>
+
+        <!-- Hibernate validator -->
+        <hibernate-validator.version>5.2.5.Final</hibernate-validator.version>
+
+        <!-- shiro -->
+        <shiro.version>1.2.3</shiro.version>
+        <junit.version>4.11</junit.version>
+        <mybatis.spring.version>1.2.2</mybatis.spring.version>
+        <fastjson.version>1.1.41</fastjson.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
+        <commons.io.version>2.4</commons.io.version>
+        <commons.codec.version>1.9</commons.codec.version>
+        <commons-fileupload.version>1.3.1</commons-fileupload.version>
+        <commons-beanutils.version>1.9.1</commons-beanutils.version>
+        <guava.version>19.0</guava.version>
+        <dozer.version>5.5.1</dozer.version>
+        <jackson.version>2.7.4</jackson.version>
+        <jackson.mapper.asl.version>1.9.13</jackson.mapper.asl.version>
+        <javaee.api.version>7.0</javaee.api.version>
+        <mysql.connector.java.version>5.1.30</mysql.connector.java.version>
+        <alibaba.druid.version>1.0.11</alibaba.druid.version>
+        <!-- apache dbcp 连接池 -->
+        <!-- <commons.dbcp.version>1.2.2</commons.dbcp.version> -->
+        <jstl.version>1.2</jstl.version>
+        <sitemesh.version>2.4.2</sitemesh.version>
+        <!-- ssm 相关 end -->
+
+        <!-- Kafka 相关 -->
+
+        <kafka.version>1.0.0</kafka.version>
+
+        <!-- Kafka 相关 -->
+
+    </properties>
+
+    <dependencies>
+        <!-- ssm 相关 begin -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <!-- 表示开发的时候引入，发布的时候不会加载此包 -->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Spring start -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+            <!-- 排除依赖的包 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- Spring end -->
+
+        <!-- Spring aop start -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- Spring aop end -->
+
+        <!-- Spring orm start -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- Spring orm end -->
+
+        <!-- spring mvc 需要引入 -->
+        <!-- Hibernate validator begin -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+        <!-- Hibernate validator end -->
+
+        <!-- spring mvc 需要引入 -->
+
+
+        <!-- Shiro start -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <!-- Shiro end -->
+
+        <!-- <dependency> <groupId>org.apache.shiro</groupId> <artifactId>shiro-quartz</artifactId> <version>${shiro.version}</version> </dependency> -->
+
+        <!-- mybatis start -->
+        <!-- mybatis核心包 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <!-- mybatis/spring包 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis.spring.version}</version>
+        </dependency>
+        <!-- mybatis end -->
+
+        <!-- maven 项目创建完成之后index.jsp会报错，引入java ee jar7.0的包就解决这个问题 -->
+        <!-- 导入java ee jar 包 -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee.api.version}</version>
+        </dependency>
+        <!-- 导入Mysql数据库链接jar包 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.java.version}</version>
+        </dependency>
+
+        <!-- alibaba druid 数据库连接池 begin -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${alibaba.druid.version}</version>
+        </dependency>
+        <!-- alibaba druid 数据库连接池 end -->
+
+        <!-- dbcp 数据库连接池 -->
+        <!-- <dependency> -->
+        <!-- 	<groupId>commons-dbcp</groupId> -->
+        <!-- 	<artifactId>commons-dbcp</artifactId> -->
+        <!-- 	<version>${commons.dbcp.version}</version> -->
+        <!-- </dependency> -->
+
+        <!-- JSTL标签类 -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
+        <!-- 日志文件管理包 -->
+        <!-- log start -->
+        <!--
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        -->
+        <!-- 格式化对象，方便输出日志 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- common-logging 实际调用slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- java.util.logging 实际调用slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- log end -->
+
+
+        <!-- Sitemesh Begin -->
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <version>${sitemesh.version}</version>
+        </dependency>
+        <!-- Sitemesh End -->
+
+
+
+        <!-- apache commons begin -->
+
+        <!-- utils BEGIN -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons.io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons.codec.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons-fileupload.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- utils END -->
+
+        <!-- apache commons end -->
+
+
+
+        <!-- google 工具包 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
+
+        <!-- 条形码、二维码生成 BEGIN -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <!-- 条形码、二维码生成 END -->
+
+
+        <!-- ImageUtil 用到的类 -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+        <!-- ImageUtil 用到的类 -->
+
+
+        <!-- 映入JSON -->
+
+        <!-- jackson json start -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson.mapper.asl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!-- jackson json end -->
+
+        <!-- pojo copy start -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>${dozer.version}</version>
+        </dependency>
+        <!-- pojo copy end -->
+
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.2</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ssm 相关 end -->
+
+        <!-- Kafka 相关 begin -->
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.11</artifactId>
+            <version>${kafka.version}</version>
+        </dependency>
+
+        <!-- Kafka 相关 end -->
+
+
+
+        <!-- 代理相关 -->
+
+        <!-- Cglib begin -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.5</version>
+        </dependency>
+        <!-- Cglib end -->
+
+        <!-- 代理相关 -->
+
+
+
+    </dependencies>
+
+    <build>
+        <finalName>demo</finalName>
+
+        <plugins>
+            <!-- ssm 相关 mybatis 自动生成数据库映射代码 begin -->
+            <!-- Mybatis generator代码生成插件 配置 -->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>${mybatis.generator.maven.plugin.version}</version>
+                <configuration>
+                    <configurationFile>${mybatis.generator.generatorConfig.xml}</configurationFile>
+                    <overwrite>true</overwrite>
+                    <verbose>true</verbose>
+                </configuration>
+
+                <!-- 数据库驱动 -->
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.connector.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${plugin.maven-compiler}</version>
+                <configuration>
+                    <source>${project.build.jdk}</source>
+                    <target>${project.build.jdk}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- ssm 相关 mybatis 自动生成数据库映射代码 end -->
+
+        </plugins>
+    </build>
+    
+</project>
