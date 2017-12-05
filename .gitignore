@@ -31,8 +31,10 @@ hs_err_pid*
 out
 gen
 
-demo/target
-kafka/target
 
-# 日志文件
+# demo 模块下忽略的文件
 demo/logs
+demo/target
+
+# kafka 模块下忽略的文件
+kafka/target
