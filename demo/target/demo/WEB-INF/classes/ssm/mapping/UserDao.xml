@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.ssm.modules.sys.dao.UserDao">
+
+	<sql id="userColumns">
+		a.id AS 'id',
+		a.login_name AS 'loginName',
+		a.password AS 'password',
+		a.name AS 'name',
+		a.login_flag AS 'loginFlag',
+		a.create_by AS 'createBy',
+		a.create_date AS 'createDate',
+		a.update_by AS 'updateBy',
+		a.update_date AS 'updateDate',
+		a.remarks AS 'remarks',
+		a.del_flag AS 'delFlag'
+	</sql>
+
+	<!-- 通过loginName获取用户 -->
+	<select id="getUserByLoginName" resultType="User">
+		SELECT <include refid="userColumns" />
+		FROM user a
+		<where>
+			login_name = #{loginName}
+		</where>
+	</select>
+	
+	<!-- 查询所有用户 -->
+	<select id="findAllList" resultType="User">
+		SELECT <include refid="userColumns" /> FROM user a
+	</select>
+
+</mapper>
