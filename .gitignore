@@ -31,5 +31,8 @@ hs_err_pid*
 out
 gen
 
+demo/target
+kafka/target
+
 # 日志文件
-logs
+demo/logs

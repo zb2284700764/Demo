@@ -28,19 +28,19 @@ public class Test {
                                      File.separator + "java" + File.separator + "other" + File.separator + "map.txt";
 
     // 公司
-    private static String pathA = "D:\\Workspaces\\temp\\rename\\a";
-    private static String pathB = "D:\\Workspaces\\temp\\rename\\b";
-    private static String pathImage = "D:\\Workspaces\\temp\\rename\\image";
+//    private static String pathA = "D:\\Workspaces\\temp\\rename\\a";
+//    private static String pathB = "D:\\Workspaces\\temp\\rename\\b";
+//    private static String pathImage = "D:\\Workspaces\\temp\\rename\\image";
     // 家里
-//    private static String pathA = "E:\\Development\\workspace\\temp\\rename\\a";
-//    private static String pathB = "E:\\Development\\workspace\\temp\\rename\\b";
-//    private static String pathImage = "E:\\Development\\workspace\\temp\\rename\\image";
+    private static String pathA = "E:\\Development\\workspace\\temp\\rename\\a";
+    private static String pathB = "E:\\Development\\workspace\\temp\\rename\\b";
+    private static String pathImage = "E:\\Development\\workspace\\temp\\rename\\image";
 
 
     public static void main(String[] args) throws InterruptedException, IOException {
         // 复制壁纸
-//        bzAll();
-        bz4();
+        bzAll();
+//        bz4();
 
         // 将图片按照文件名排序
 //		sortA();
@@ -335,8 +335,12 @@ public class Test {
         for (int i = 0; i < valuesp.length; i++) {
             String filepi = keysp[i];
             String vpi = valuesp[i];
-//            String fileNamepi = filepi.substring(filepi.lastIndexOf("\\") + 1, filepi.lastIndexOf("."));
-            String fileNamepi = filepi;
+            String fileNamepi;
+            if (isWriteFile) {
+                fileNamepi = filepi.substring(filepi.lastIndexOf("\\") + 1, filepi.lastIndexOf("."));
+            } else {
+                fileNamepi = filepi;
+            }
             if (isWriteFile) {
                 newMap.put(fileNamepi, vpi);
             }
