@@ -424,13 +424,13 @@
         <!-- ssm 相关 end -->
 
         <!-- Kafka 相关 begin -->
-
+        <!--
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka_2.11</artifactId>
             <version>${kafka.version}</version>
         </dependency>
-
+        -->
         <!-- Kafka 相关 end -->
 
 
@@ -448,7 +448,16 @@
         <!-- 代理相关 -->
 
 
+        <!-- 模块间的依赖 begin -->
 
+        <!-- 依赖 kafka client 源码 -->
+        <dependency>
+            <groupId>org.apache</groupId>
+            <artifactId>kafka</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 模块间的依赖 end -->
     </dependencies>
 
     <build>
