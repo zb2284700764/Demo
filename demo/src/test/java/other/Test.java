@@ -436,11 +436,11 @@ public class Test {
         }
 
         // 将map中的key排序
-        newMap = newMap
-                .entrySet()
-                .stream()
-                .sorted(Map.Entry.<String, String>comparingByValue().reversed())
-                .collect(Collectors.toMap(c -> c.getKey(), c -> c.getValue()));
+//        newMap = newMap
+//                .entrySet()
+//                .stream()
+//                .sorted(Map.Entry.<String, String>comparingByValue().reversed())
+//                .collect(Collectors.toMap(c -> c.getKey(), c -> c.getValue()));
 
         String content = JsonMapper.toJsonString(newMap);
         try {
