@@ -2,18 +2,27 @@ package com.demo.kafka;
 
 public interface MyProperties {
 
+    /**
+     * kafka Server 地址
+     */
+    String BOOTSTRAP_SERVER = "localhost:9092";
 
+    /**
+     * 组groupId
+     */
+    String GROUP_ID = "test";
 
-    String zkConnect = "localhost:2181";
-    String groupId = "group1";
-    String topic = "test";
-    String kafkaServerURL = "localhost";
-    int kafkaServerPort = 9092;
-    int kafkaProducerBufferSize = 64 * 1024;
-    int connectionTimeOut = 20000;
-    int reconnectInterval = 10000;
-    String topic2 = "topic2";
-    String topic3 = "topic3";
-    String clientId = "SimpleConsumerDemoClient";
+    /**
+     * topic:test
+     */
+    String TOPIC_TEST = "test";
+    /**
+     * topic:test1
+     */
+    String TOPIC_TEST1 = "test1";
+    /**
+     * topic:test2
+     */
+    String TOPIC_TEST2 = "test2";
 
 }

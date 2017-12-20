@@ -301,11 +301,11 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		long afterTime = after.getTime();
 		long timeMillis = afterTime - beforeTime;
 
-		long day = timeMillis / (24 * 60 * 60 * 1000);
-		long hour = (timeMillis / (60 * 60 * 1000) - day * 24);
-		long min = ((timeMillis / (60 * 1000)) - day * 24 * 60 - hour * 60);
-		long s = (timeMillis / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
-		long sss = (timeMillis - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000 - min * 60 * 1000 - s * 1000);
+		long day = timeMillis / (24 * 60 * 60 * 1000); // 天
+		long hour = (timeMillis / (60 * 60 * 1000) - day * 24); // 时
+		long min = ((timeMillis / (60 * 1000)) - day * 24 * 60 - hour * 60); // 分
+		long s = (timeMillis / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60); // 秒
+		long sss = (timeMillis - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000 - min * 60 * 1000 - s * 1000); // 毫秒
 
 		return day + "天" + hour + "小时" + min + "分" + s + "秒";
 	}
