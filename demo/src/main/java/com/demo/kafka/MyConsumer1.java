@@ -17,7 +17,8 @@ public class MyConsumer1 {
     }
 
     /**
-     * 订阅 topic test1 通道
+     * 订阅 topic 名为 test1 的通道
+     * 当订阅的是 test topic 的时候, 只会订阅 test(test 中有 2 个分区) 中的一个分区, 另一个分区由其他消费者处理
      */
     public static void subscribeTest1Topic() {
         Properties props = new Properties();
@@ -36,7 +37,8 @@ public class MyConsumer1 {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
         // 订阅名称为 test1 的 topic
-        consumer.subscribe(Arrays.asList("test"));
+//        consumer.subscribe(Arrays.asList("test"));
+        consumer.subscribe(Arrays.asList("test1"));
 
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);

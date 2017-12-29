@@ -142,7 +142,7 @@ public class MyProducer {
         props.put("linger.ms", 1);
         // 消息缓冲池大小。尚未被发送的消息会保存在Producer的内存中，如果消息产生的速度大于消息发送的速度，那么缓冲池满后发送消息的请求会被阻塞, 默认 33554432字节(32M)
         props.put("buffer.memory", 33554432);
-
+        // 分区策略, 消息发送到哪个分区
         props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, DefaultPartitioner.class.getName());
 
         // 指定 key 的序列化处理类,根据key和value的类型决定
