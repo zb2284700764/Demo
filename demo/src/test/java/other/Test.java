@@ -23,18 +23,18 @@ import java.util.stream.Collectors;
 public class Test {
 
     private static String pathP = "C:\\Users\\zhoubin\\Pictures\\壁纸";
-    private static int length = 134;
+    private static int length = 44;
     private static String filePath = System.getProperty("user.dir") + File.separator + "demo" + File.separator + "src" + File.separator + "test" +
                                      File.separator + "java" + File.separator + "other" + File.separator + "map.txt";
 
     // 公司
-//    private static String pathA = "D:\\Workspaces\\temp\\rename\\a";
-//    private static String pathB = "D:\\Workspaces\\temp\\rename\\b";
-//    private static String pathImage = "D:\\Workspaces\\temp\\rename\\image";
+    private static String pathA = "D:\\Workspaces\\temp\\rename\\a";
+    private static String pathB = "D:\\Workspaces\\temp\\rename\\b";
+    private static String pathImage = "D:\\Workspaces\\temp\\rename\\image";
     // 家里
-    private static String pathA = "E:\\Development\\workspace\\temp\\rename\\a";
-    private static String pathB = "E:\\Development\\workspace\\temp\\rename\\b";
-    private static String pathImage = "E:\\Development\\workspace\\temp\\rename\\image";
+//    private static String pathA = "E:\\Development\\workspace\\temp\\rename\\a";
+//    private static String pathB = "E:\\Development\\workspace\\temp\\rename\\b";
+//    private static String pathImage = "E:\\Development\\workspace\\temp\\rename\\image";
 
 
     public static void main(String[] args) throws InterruptedException, IOException {
@@ -47,6 +47,7 @@ public class Test {
 
         // 将歌曲重命名，按照 "-" 分割，歌手名字放前面，歌曲名称放后面
 //        soundRename();
+
     }
 
     /**
@@ -78,11 +79,11 @@ public class Test {
         System.out.println("\n\n");
         Thread.sleep(100);
 
-        moveToPicutre(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
-        System.out.println("\n\n");
-        Thread.sleep(100);
-
-        repeatFile(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
+//        moveToPicutre(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
+//        System.out.println("\n\n");
+//        Thread.sleep(100);
+//
+//        repeatFile(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
     }
 
     public static void bzAll() throws InterruptedException {
@@ -203,71 +204,6 @@ public class Test {
         }
         System.out.println("结束\t删除高不为1080和宽不为为1920的图片");
 
-    }
-
-    /**
-     * 6 将壁纸文件中重复的图片移动到a文件夹
-     *
-     * @throws @author zhoubin(作者)
-     * @Title repeatFile (方法名)
-     * @require
-     * @date 2017年3月29日 下午2:57:37
-     * @history
-     */
-    public static void repeatFile() {
-        System.out.println("#########################################【 6 】#########################################");
-        System.out.println("开始\t将壁纸文件中重复的图片移动到a文件夹");
-        System.out.println(String.format("将壁纸 %s 文件夹中重复的图片移动到 %s 文件夹", pathP, pathA));
-
-        File filep = new File(pathP);
-        Map<String, String> mapp = getDirMD5(filep, true);
-
-        String[] keysp = new String[mapp.values().size()];
-        String[] valuesp = new String[mapp.values().size()];
-        int index = 0;
-
-        for (Map.Entry<String, String> entryp : mapp.entrySet()) {
-            keysp[index] = entryp.getKey();
-            valuesp[index] = entryp.getValue();
-            index++;
-            // System.out.println("Key = " + entry.getKey() + ", Value = " +
-            // entry.getValue()+", "+index);
-        }
-
-        for (int i = 0; i < valuesp.length; i++) {
-
-            String fileIp = keysp[i];
-            String valueIp = valuesp[i];
-
-            for (int j = (i + 1); j < valuesp.length; j++) {
-                if ((i + 1) <= valuesp.length) {
-                    String fileJp = keysp[j];
-                    String vJp = valuesp[j];
-
-                    if (valueIp.equals(vJp)) {
-                        // 将相同的图片移动到另外一个目录
-
-                        String fileNameIp = fileIp.substring(fileIp.lastIndexOf("\\") + 1, fileIp.lastIndexOf("."));
-                        String fileNameJp = fileJp.substring(fileJp.lastIndexOf("\\") + 1, fileJp.lastIndexOf("."));
-                        FileUtil.fileCopy(fileIp, pathA);
-                        FileUtil.fileCopy(fileJp, pathA);
-                        if (Integer.parseInt(fileNameJp) > Integer.parseInt(fileNameIp)) {
-                            FileUtil.deleteDir(fileJp);
-                        } else {
-                            FileUtil.deleteDir(fileIp);
-                        }
-                        // FileUtil.fileCopy(pathj,
-                        // pathB+File.separator+fileNamei.substring(0,
-                        // fileNamei.lastIndexOf("."))+"-"+fileNamej);
-
-                        System.out.println("相同的【" + fileNameIp + "、" + fileNameJp + "】");
-                        System.out.println(fileJp);
-                    }
-                }
-            }
-        }
-
-        System.out.println("结束\t将壁纸文件中重复的图片移动到a文件夹");
     }
 
     /**
@@ -451,6 +387,71 @@ public class Test {
         System.out.println("结束\t将新增的图片md5信息追加到集合中");
 
         System.out.println("结束\t将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片");
+    }
+
+    /**
+     * 6 将壁纸文件中重复的图片移动到a文件夹
+     *
+     * @throws @author zhoubin(作者)
+     * @Title repeatFile (方法名)
+     * @require
+     * @date 2017年3月29日 下午2:57:37
+     * @history
+     */
+    public static void repeatFile() {
+        System.out.println("#########################################【 6 】#########################################");
+        System.out.println("开始\t将壁纸文件中重复的图片移动到a文件夹");
+        System.out.println(String.format("将壁纸 %s 文件夹中重复的图片移动到 %s 文件夹", pathP, pathA));
+
+        File filep = new File(pathP);
+        Map<String, String> mapp = getDirMD5(filep, true);
+
+        String[] keysp = new String[mapp.values().size()];
+        String[] valuesp = new String[mapp.values().size()];
+        int index = 0;
+
+        for (Map.Entry<String, String> entryp : mapp.entrySet()) {
+            keysp[index] = entryp.getKey();
+            valuesp[index] = entryp.getValue();
+            index++;
+            // System.out.println("Key = " + entry.getKey() + ", Value = " +
+            // entry.getValue()+", "+index);
+        }
+
+        for (int i = 0; i < valuesp.length; i++) {
+
+            String fileIp = keysp[i];
+            String valueIp = valuesp[i];
+
+            for (int j = (i + 1); j < valuesp.length; j++) {
+                if ((i + 1) <= valuesp.length) {
+                    String fileJp = keysp[j];
+                    String vJp = valuesp[j];
+
+                    if (valueIp.equals(vJp)) {
+                        // 将相同的图片移动到另外一个目录
+
+                        String fileNameIp = fileIp.substring(fileIp.lastIndexOf("\\") + 1, fileIp.lastIndexOf("."));
+                        String fileNameJp = fileJp.substring(fileJp.lastIndexOf("\\") + 1, fileJp.lastIndexOf("."));
+                        FileUtil.fileCopy(fileIp, pathA);
+                        FileUtil.fileCopy(fileJp, pathA);
+                        if (Integer.parseInt(fileNameJp) > Integer.parseInt(fileNameIp)) {
+                            FileUtil.deleteDir(fileJp);
+                        } else {
+                            FileUtil.deleteDir(fileIp);
+                        }
+                        // FileUtil.fileCopy(pathj,
+                        // pathB+File.separator+fileNamei.substring(0,
+                        // fileNamei.lastIndexOf("."))+"-"+fileNamej);
+
+                        System.out.println("相同的【" + fileNameIp + "、" + fileNameJp + "】");
+                        System.out.println(fileJp);
+                    }
+                }
+            }
+        }
+
+        System.out.println("结束\t将壁纸文件中重复的图片移动到a文件夹");
     }
 
     /**
