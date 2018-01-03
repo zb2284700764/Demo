@@ -79,11 +79,11 @@ public class Test {
         System.out.println("\n\n");
         Thread.sleep(100);
 
-//        moveToPicutre(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
-//        System.out.println("\n\n");
-//        Thread.sleep(100);
-//
-//        repeatFile(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
+        moveToPicutre(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
+        System.out.println("\n\n");
+        Thread.sleep(100);
+
+        repeatFile(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
     }
 
     public static void bzAll() throws InterruptedException {
