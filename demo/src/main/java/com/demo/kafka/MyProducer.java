@@ -47,6 +47,7 @@ public class MyProducer {
         props.put("batch.size", 16384);
         // 发送消息前等待的毫秒数
         props.put("linger.ms", 1);
+        // 指定分区策略
         props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, DefaultPartitioner.class.getName());
         // 消息缓冲池大小。尚未被发送的消息会保存在Producer的内存中，如果消息产生的速度大于消息发送的速度，那么缓冲池满后发送消息的请求会被阻塞, 默认 33554432字节(32M)
         props.put("buffer.memory", 33554432);
@@ -140,6 +141,8 @@ public class MyProducer {
         props.put("batch.size", 16384);
         // 发送消息前等待的毫秒数
         props.put("linger.ms", 1);
+        // 指定分区策略
+        props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, DefaultPartitioner.class.getName());
         // 消息缓冲池大小。尚未被发送的消息会保存在Producer的内存中，如果消息产生的速度大于消息发送的速度，那么缓冲池满后发送消息的请求会被阻塞, 默认 33554432字节(32M)
         props.put("buffer.memory", 33554432);
         // 分区策略, 消息发送到哪个分区
@@ -152,7 +155,15 @@ public class MyProducer {
 
         Producer<String, String> producer = new KafkaProducer<>(props);
         for (int i = 0; i < 10; i++) {
-            producer.send(new ProducerRecord<>("test", "topic test partition 0 中的 key->" + i, " topic test 中的 value->" + i));
+//            producer.send(new ProducerRecord<>("test", "topic test partition 0 中的 key->" + i, " topic test 中的 value->" + i));
+
+            producer.send(new ProducerRecord<>("test", "topic test partition 0 中的 key->" + i, " topic test 中的 value->" + i), (recordMetadata, e) -> {
+                if (e != null) {
+                    e.printStackTrace();
+                } else {
+                    System.out.println("Topic test partition "+recordMetadata.partition()+" : " + recordMetadata.offset());
+                }
+            });
         }
         producer.close();
     }
