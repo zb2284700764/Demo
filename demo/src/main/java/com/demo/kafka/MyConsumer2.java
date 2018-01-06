@@ -15,9 +15,9 @@ import java.util.Properties;
 public class MyConsumer2 {
 
     public static void main(String[] args) {
-//        assignPartition0();
+        assignPartition0();
 
-        subscribeTestPartition0or1();
+//        subscribeTestPartition0or1();
     }
 
     /**

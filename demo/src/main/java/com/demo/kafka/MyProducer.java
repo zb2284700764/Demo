@@ -23,21 +23,14 @@ public class MyProducer {
         basicProducer();
 
         // 用 test1 topic
-//        try {
-//            callbackProducer();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+//        callbackProducer();
 
     }
 
     /**
      *  带回调方法的消息发送者
-     * @throws ExecutionException
      */
-    public static void callbackProducer() throws ExecutionException, InterruptedException {
+    public static void callbackProducer() {
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put("acks", "all");
@@ -157,11 +150,12 @@ public class MyProducer {
         for (int i = 0; i < 10; i++) {
 //            producer.send(new ProducerRecord<>("test", "topic test partition 0 中的 key->" + i, " topic test 中的 value->" + i));
 
+            int finalI = i;
             producer.send(new ProducerRecord<>("test", "topic test partition 0 中的 key->" + i, " topic test 中的 value->" + i), (recordMetadata, e) -> {
                 if (e != null) {
                     e.printStackTrace();
                 } else {
-                    System.out.println("Topic test partition "+recordMetadata.partition()+" : " + recordMetadata.offset());
+                    System.out.println("Topic test partition " + recordMetadata.partition() + " : offset : " + recordMetadata.offset() + " value : " + finalI);
                 }
             });
         }

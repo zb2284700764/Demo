@@ -13,9 +13,9 @@ public class MyConsumer1 {
 
     public static void main(String[] args) {
 
-//        assignPartition1();
+        assignPartition1();
 
-        subscribeTestPartition0or1();
+//        subscribeTestPartition0or1();
 
     }
 
