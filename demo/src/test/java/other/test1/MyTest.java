@@ -1,4 +1,4 @@
-package other;
+package other.test1;
 
 
 import com.common.mapper.JsonMapper;
@@ -20,12 +20,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Test {
+public class MyTest {
 
     private static String pathP = "C:\\Users\\zhoubin\\Pictures\\壁纸";
     private static int length = 44;
     private static String filePath = System.getProperty("user.dir") + File.separator + "demo" + File.separator + "src" + File.separator + "test" +
-                                     File.separator + "java" + File.separator + "other" + File.separator + "map.txt";
+                                     File.separator + "java" + File.separator + "other" + File.separator + "test1" + File.separator + "map.txt";
+
 
     // 公司
     private static String pathA = "D:\\Workspaces\\temp\\rename\\a";
