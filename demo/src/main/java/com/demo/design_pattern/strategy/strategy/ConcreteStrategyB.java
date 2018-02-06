@@ -1,4 +1,4 @@
-package com.strategy.strategy;
+package com.demo.design_pattern.strategy.strategy;
 
 /**
  * 具体的策略实现类B

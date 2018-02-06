@@ -1,4 +1,4 @@
-package com.strategy.strategy;
+package com.demo.design_pattern.strategy.strategy;
 
 /**
  * 抽象策略角色

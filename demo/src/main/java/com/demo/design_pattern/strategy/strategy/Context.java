@@ -1,4 +1,4 @@
-package com.strategy.strategy;
+package com.demo.design_pattern.strategy.strategy;
 
 /**
  * 环境角色类(可以理解为组装使用策略的类)

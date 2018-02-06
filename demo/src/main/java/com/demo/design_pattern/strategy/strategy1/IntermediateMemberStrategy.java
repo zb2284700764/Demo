@@ -1,4 +1,4 @@
-package com.strategy.strategy1;
+package com.demo.design_pattern.strategy.strategy1;
 
 /**
  * 中级会员折扣类(中级会员给 9折)

@@ -1,4 +1,4 @@
-package com.strategy.strategy1;
+package com.demo.design_pattern.strategy.strategy1;
 
 /**
  * 初级会员折扣类(初级会员不给折扣)
