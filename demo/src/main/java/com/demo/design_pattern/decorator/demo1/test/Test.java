@@ -1,9 +1,9 @@
-package com.decorator.demo1.test;
+package com.demo.design_pattern.decorator.demo1.test;
 
-import com.decorator.demo1.component.Person;
-import com.decorator.demo1.concreteComponent.Teenager;
-import com.decorator.demo1.concreteDecorator.Casquette;
-import com.decorator.demo1.concreteDecorator.Shirt;
+import com.demo.design_pattern.decorator.demo1.component.Person;
+import com.demo.design_pattern.decorator.demo1.concreteComponent.Teenager;
+import com.demo.design_pattern.decorator.demo1.concreteDecorator.Casquette;
+import com.demo.design_pattern.decorator.demo1.concreteDecorator.Shirt;
 
 /**
  * 测试类

@@ -13,7 +13,7 @@ public class Test2 {
 
 	public static void main(String[] args) throws Exception {
 
-		AudiCar car = Driver2.createAudiCar("com.factory.absfactory.product.AudiSportCar");
+		AudiCar car = Driver2.createAudiCar("com.demo.design_pattern.factory.absfactory.product.AudiSportCar");
 		car.setName("audi");
 		car.drive();
 	}
