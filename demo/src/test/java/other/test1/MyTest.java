@@ -40,7 +40,8 @@ public class MyTest {
     public static void main(String[] args) throws InterruptedException, IOException {
         // 复制壁纸
         bzAll();
-//        bz4();
+//        bz12();
+//        bz46();
 
         // 将图片按照文件名排序
 //		sortA();
@@ -71,10 +72,20 @@ public class MyTest {
     }
 
     /**
+     * 就执行1、2步
+     * @throws InterruptedException
+     */
+    public static void bz12() throws InterruptedException {
+        moveToA(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
+
+        rename(); // 2 将a文件夹中的图片改名j
+    }
+
+    /**
      * 从第四步开始，直接对比 a 文件夹和壁纸文件夹的图片
      * @throws InterruptedException
      */
-    public static void bz4() throws InterruptedException {
+    public static void bz46() throws InterruptedException {
         repeatFile2(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
         System.out.println("\n\n");
         Thread.sleep(100);
