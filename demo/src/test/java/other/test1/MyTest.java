@@ -31,10 +31,6 @@ public class MyTest {
     private static String pathA = "D:\\Workspaces\\temp\\rename\\a";
     private static String pathB = "D:\\Workspaces\\temp\\rename\\b";
     private static String pathImage = "D:\\Workspaces\\temp\\rename\\image";
-    // 家里
-//    private static String pathA = "E:\\Development\\workspace\\temp\\rename\\a";
-//    private static String pathB = "E:\\Development\\workspace\\temp\\rename\\b";
-//    private static String pathImage = "E:\\Development\\workspace\\temp\\rename\\image";
 
 
     public static void main(String[] args) throws InterruptedException, IOException {
@@ -79,6 +75,7 @@ public class MyTest {
         moveToA(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
 
         rename(); // 2 将a文件夹中的图片改名j
+
     }
 
     /**
@@ -88,37 +85,36 @@ public class MyTest {
     public static void bz46() throws InterruptedException {
         repeatFile2(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
         System.out.println("\n\n");
-        Thread.sleep(100);
 
         moveToPicutre(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
         System.out.println("\n\n");
-        Thread.sleep(100);
 
         repeatFile(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
+
     }
 
     public static void bzAll() throws InterruptedException {
+        FileUtil.createDir(pathA);
+        FileUtil.createDir(pathB);
+        FileUtil.createDir(pathImage);
+
         moveToA(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
         System.out.println("\n\n");
-        Thread.sleep(100);
 
         rename(); // 2 将a文件夹中的图片改名j
         System.out.println("\n\n");
-        Thread.sleep(100);
 
         deleteWidthEq1080(); // 3 删除宽度为 1080 的图片
         System.out.println("\n\n");
-        Thread.sleep(100);
 
         repeatFile2(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
         System.out.println("\n\n");
-        Thread.sleep(100);
 
         moveToPicutre(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
         System.out.println("\n\n");
-        Thread.sleep(100);
 
         repeatFile(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
+
     }
 
     /**
@@ -156,7 +152,6 @@ public class MyTest {
         System.out.println("开始\t将a文件夹中的图片改名");
         System.out.println(String.format("将 %s 文件夹下的图片重命名", pathA));
 
-        FileUtil.createDir(pathA);
         // 文件改名字
         File file = new File(pathA);
         File[] fileArr = file.listFiles();
@@ -230,8 +225,6 @@ public class MyTest {
         System.out.println("#########################################【 4 】#########################################");
         System.out.println("开始\t对比壁纸和a文件夹中图片，将重复的移动到b文件夹");
         System.out.println(String.format("对比壁纸 %s 文件夹和 %s 文件夹中图片，将重复的移动到 %s 文件夹", pathP, pathA, pathB));
-        FileUtil.createDir(pathA);
-        FileUtil.createDir(pathB);
 
         File filep = new File(pathP);
         File filea = new File(pathA);
