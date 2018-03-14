@@ -19,7 +19,7 @@
 	<!-- 通过loginName获取用户 -->
 	<select id="getUserByLoginName" resultType="User">
 		SELECT <include refid="userColumns" />
-		FROM user a
+		FROM sys_user a
 		<where>
 			login_name = #{loginName}
 		</where>

@@ -18,8 +18,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user` (
   `id` varchar(64) NOT NULL COMMENT 'id主键',
   `login_name` varchar(100) NOT NULL COMMENT '登录名',
   `password` varchar(100) NOT NULL COMMENT '密码',
@@ -37,7 +37,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'zhoubin', '74dfcefa8cf9a5fd7eae4552cc1b47546ee7b9b74fb3c78a71eb061a', null, '0', null, null, null, null, null, '0');
-INSERT INTO `user` VALUES ('2', 'zhangsan', '7c04e848ae0659ea503f16039ecdc4fb1eea895a1cb3a0162bc12fc4', '张三', '1', null, null, null, null, null, '0');
-INSERT INTO `user` VALUES ('3', 'lisi', '96aaabcd7900f80edb79b77c01fba62b6ceb0a3e69823ea40e5315b0', '李四', '0', null, null, null, null, null, '0');
-INSERT INTO `user` VALUES ('4', 'wangwu', 'f4a068c8df644fa23614d51b1c1bd22fe0951ba64d1045e54270da2f', '张三', '0', null, null, null, null, null, '0');
+INSERT INTO `sys_user` VALUES ('1', 'zhoubin', '74dfcefa8cf9a5fd7eae4552cc1b47546ee7b9b74fb3c78a71eb061a', null, '0', null, null, null, null, null, '0');
+INSERT INTO `sys_user` VALUES ('2', 'zhangsan', '7c04e848ae0659ea503f16039ecdc4fb1eea895a1cb3a0162bc12fc4', '张三', '1', null, null, null, null, null, '0');
+INSERT INTO `sys_user` VALUES ('3', 'lisi', '96aaabcd7900f80edb79b77c01fba62b6ceb0a3e69823ea40e5315b0', '李四', '0', null, null, null, null, null, '0');
+INSERT INTO `sys_user` VALUES ('4', 'wangwu', 'f4a068c8df644fa23614d51b1c1bd22fe0951ba64d1045e54270da2f', '张三', '0', null, null, null, null, null, '0');
