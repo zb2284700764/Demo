@@ -31,6 +31,7 @@ public class LoginController extends BaseController {
 //		subject.logout(); // 模拟退出
 
 		Object principal = subject.getPrincipal();
+		subject.getSession().getId();
 		// 登录认证通过
 		if(principal != null) {
 			// 转发到 UserController 查询用户列表
