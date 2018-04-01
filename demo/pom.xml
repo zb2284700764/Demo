@@ -70,6 +70,10 @@
         <zookeeper.version>3.4.8</zookeeper.version>
         <!-- Zookeeper 相关 -->
 
+        <!-- redis client -->
+        <jedis.version>2.9.0</jedis.version>
+        <!-- redis client -->
+
     </properties>
 
     <dependencies>
@@ -498,6 +502,13 @@
         <!-- Zookeeper End -->
 
 
+        <!-- Redis client Begin -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+        <!-- Redis client End -->
 
 
 
