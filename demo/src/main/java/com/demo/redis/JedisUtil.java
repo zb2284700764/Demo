@@ -8,7 +8,7 @@ public class JedisUtil {
 
     private static String ip = "127.0.0.1";
     private static int port = 6379;
-    private static String pasword = "123456";
+    private static String password = "123456";
     // 最大连接数
     private static int maxActive = 10;
     // 控制一个 pool 中最多有多少个状态为 idle（空闲）的 jedis 实例，默认试 8
@@ -28,7 +28,8 @@ public class JedisUtil {
         config.setMaxTotal(maxActive);
         config.setMaxWaitMillis(maxWait);
         config.setTestOnBorrow(testOnBorrow);
-        jedisPool = new JedisPool(config, ip, port, timeout);
+//        jedisPool = new JedisPool(config, ip, port, timeout);
+        jedisPool = new JedisPool(config, ip, port, timeout, password);
 
     }
 
