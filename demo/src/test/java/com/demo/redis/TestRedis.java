@@ -1,11 +1,11 @@
-
-
 package com.demo.redis;
 
 import com.google.common.collect.Maps;
 import org.junit.Test;
 import redis.clients.jedis.BinaryClient;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ScanResult;
+import redis.clients.jedis.Tuple;
 
 import java.util.List;
 import java.util.Map;
@@ -228,6 +228,14 @@ public class TestRedis {
         // 返回所有集合的并集
         System.out.println(jedis.sunion("name1", "name2", "name3"));
 
+        // 迭代集合中的元素
+        ScanResult<String> result = jedis.sscan("name3", "0");
+        System.out.println("sscan迭代集合：");
+        for (String str : result.getResult()) {
+            System.out.print(str + ",");
+        }
+
+
         // 清空数据
         jedis.flushDB();
     }
@@ -249,28 +257,119 @@ public class TestRedis {
         jedis.zadd("name1", 6, "f");
         jedis.zadd("name1", 7, "g");
 
-        Map<String,Double> scoreMembers = Maps.newHashMap();
+        Map<String, Double> scoreMembers = Maps.newHashMap();
         scoreMembers.put("a", 1D);
         scoreMembers.put("b", 2D);
         scoreMembers.put("c", 3D);
+        scoreMembers.put("I", 4D);
+        scoreMembers.put("J", 5D);
         jedis.zadd("name2", scoreMembers);
 
 
         // 获取范围内的成员（这里获取全部）
-        System.out.println("name1 集合中的元素："+jedis.zrange("name1", 0, -1));
-        System.out.println("name2 集合中的元素："+jedis.zrange("name2", 0, -1));
+        System.out.println("name1 集合中的元素：" + jedis.zrange("name1", 0, -1));
+        System.out.println("name2 集合中的元素：" + jedis.zrange("name2", 0, -1));
 
         // 获得集合中成员的个数
-        System.out.println("name2 集合中元素的个数："+jedis.zcard("name2"));
+        System.out.println("name2 集合中元素的个数：" + jedis.zcard("name2"));
 
         // 查询指定顺序范围内元素个数
-        System.out.println("name1 集合中序号2-4之间的元素个数："+jedis.zcount("name1", 2, 4));
+        System.out.println("name1 集合中序号2-4之间的元素个数：" + jedis.zcount("name1", 2, 4));
 
         // 给元素“张三”顺序号加上 3，如果没有“张三”这个元素，那么就在顺序号 3 的位置插入“张三”
         jedis.zincrby("name1", 3, "张三");
-        System.out.println("name1 集合中的元素："+jedis.zrange("name1", 0, -1));
+        jedis.zincrby("name1", 3, "H");
+        System.out.println("name1 集合中的元素：" + jedis.zrange("name1", 0, -1));
 
+        // 将 name1,name2 两个集合中的交集合并并存储在一个新的 nameInter 集合中
+        jedis.zinterstore("nameInter", "name1", "name2");
+        System.out.println("将name1和name2集合中的交集存储在name3集合中：" + jedis.zrange("nameInter", 0, -1));
 
+        // 返回集合中指定成员之间的成员个数
+        System.out.println("获取name1集合中元素b和元素g之间的元素个数：" + jedis.zlexcount("name1", "[b", "[g"));
+
+        // 删除集合中一个成员
+        jedis.zrem("name1", "张三");
+        System.out.println("删除集合中的成员张三：" + jedis.zrange("name1", 0, -1));
+
+        // 获取集合中成员的 score
+        System.out.println("获取集合中成员b的 score：" + jedis.zscore("name1", "b"));
+        System.out.println("获取集合中成员c的 score：" + jedis.zscore("name1", "c"));
+        System.out.println("获取集合中成员H的 score：" + jedis.zscore("name1", "张三"));
+
+        // 获取集合中成员的索引
+        System.out.println("获取集合中成员的下标：" + jedis.zrank("name1", "b"));
+
+        // 返回指定成员区间内的成员，按成员字典正序排序, 序号必须相同
+        System.out.println("获取集合中指定成员之间的所有成员按score正序排序不能有汉字：" + jedis.zrangeByLex("name1", "[b", "[f"));
+
+        // 通过score 返回有序集合中指定区间的成员
+        System.out.println("通过score 返回有序集合中指定区间的成员：" + jedis.zrangeByScore("name1", 3, 5));
+
+        // 删除名称按字典由低到高排序成员之间所有成员
+        Map<String, Double> name4Map = Maps.newHashMap();
+        name4Map.put("a", 1D);
+        name4Map.put("b", 1D);
+        name4Map.put("c", 1D);
+        name4Map.put("d", 2D);
+        jedis.zadd("name4", name4Map);
+        jedis.zremrangeByLex("name4", "[a", "[d");
+        System.out.println("删除名称按字典由低到高排序成员之间所有成员：" + jedis.zrange("name4", 0, -1));
+
+        // 移除有序集key中，指定排名(rank(下标))区间内的所有成员
+        Map<String, Double> name5Map = Maps.newHashMap();
+        name5Map.put("a", 1D);
+        name5Map.put("b", 2D);
+        name5Map.put("c", 3D);
+        name5Map.put("d", 4D);
+        name5Map.put("e", 5D);
+        jedis.zadd("name5", name5Map);
+        jedis.zremrangeByRank("name5", 1, 3);
+        System.out.println("移除有序集key中，指定排名(rank(下标))区间内的所有成员：" + jedis.zrange("name5", 0, -1));
+
+        // 除有序集key中，所有score值介于min和max之间(包括等于min或max)的成员
+        Map<String, Double> name6Map = Maps.newHashMap();
+        name6Map.put("a", 1D);
+        name6Map.put("b", 2D);
+        name6Map.put("c", 3D);
+        name6Map.put("d", 4D);
+        name6Map.put("e", 5D);
+        jedis.zadd("name6", name6Map);
+        jedis.zremrangeByScore("name6", 1D, 3D);
+        System.out.println("除有序集key中，所有score值介于min和max之间(包括等于min或max)的成员：" + jedis.zrange("name6", 0, -1));
+
+        // 返回有序集合中指定区间内的成员，通过索引倒序算，分数从高到低
+        Map<String, Double> name7Map = Maps.newHashMap();
+        name7Map.put("a", 1D);
+        name7Map.put("b", 2D);
+        name7Map.put("c", 3D);
+        name7Map.put("d", 4D);
+        name7Map.put("e", 5D);
+        jedis.zadd("name7", name7Map);
+        System.out.println("返回有序集合中指定区间内的成员，通过索引倒序算，分数从高到低：" + jedis.zrevrange("name7", 1, 4));
+        ;
+
+        // 返回有序集中指定分数区间内的成员，分数从高到低排序
+        System.out.println("返回有序集中指定分数区间内的成员，分数从高到低排序：" + jedis.zrevrangeByScore("name7", 5, 1));
+        ;
+
+        // 返回有序集合中指定成员的排名
+        System.out.println("返回有序集合中指定成员的排名：" + jedis.zrevrank("name7", "b"));
+
+        // 返回有序集中，成员的分数值
+        System.out.println("返回有序集中，成员的分数值：" + jedis.zscore("name7", "b"));
+
+        // 计算一个或多个集合中的并集，并将结果存储在一个新的集合中
+        jedis.zunionstore("nameUnion", "name1", "name2");
+        System.out.println(jedis.zrange("nameUnion", 0, -1));
+
+        // zscan 迭代遍历
+        System.out.println("zscan 迭代遍历");
+        ScanResult<Tuple> result = jedis.zscan("nameUnion", "0");
+        List<Tuple> list = result.getResult();
+        for (Tuple tuple : list) {
+            System.out.println(tuple.getScore() + " -> " + tuple.getElement());
+        }
 
         // 清空数据
         jedis.flushDB();

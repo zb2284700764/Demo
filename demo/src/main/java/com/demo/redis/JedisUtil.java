@@ -28,8 +28,8 @@ public class JedisUtil {
         config.setMaxTotal(maxActive);
         config.setMaxWaitMillis(maxWait);
         config.setTestOnBorrow(testOnBorrow);
-//        jedisPool = new JedisPool(config, ip, port, timeout);
-        jedisPool = new JedisPool(config, ip, port, timeout, password);
+        jedisPool = new JedisPool(config, ip, port, timeout);
+//        jedisPool = new JedisPool(config, ip, port, timeout, password);
 
     }
 
