@@ -185,6 +185,16 @@
 
         <!-- spring mvc 需要引入 -->
 
+        <!-- Spring data redis -->
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>2.0.5.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Spring data redis -->
+
 
         <!-- Shiro start -->
         <dependency>
