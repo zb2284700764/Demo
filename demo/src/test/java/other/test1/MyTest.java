@@ -21,21 +21,24 @@ import java.util.Map;
 
 public class MyTest {
 
-    private static String pathP = "C:\\Users\\zhoubin\\Pictures\\壁纸";
     private static int length = 44;
     private static String filePath = System.getProperty("user.dir") + File.separator + "demo" + File.separator + "src" + File.separator + "test" +
                                      File.separator + "java" + File.separator + "other" + File.separator + "test1" + File.separator + "map.txt";
 
 
     // 公司
+    private static String pathP = "C:\\Users\\zhoubin\\Pictures\\壁纸";
     private static String pathA = "D:\\Workspaces\\temp\\rename\\a";
     private static String pathB = "D:\\Workspaces\\temp\\rename\\b";
     private static String pathImage = "D:\\Workspaces\\temp\\rename\\image";
 
     // 家里
+//    private static String pathP = "C:\\Users\\zhoubin\\Pictures\\壁纸";
 //    private static String pathA = "E:\\Workspaces\\temp\\rename\\a";
 //    private static String pathB = "E:\\Workspaces\\temp\\rename\\b";
 //    private static String pathImage = "E:\\Workspaces\\temp\\rename\\image";
+
+
 
 
     public static void main(String[] args) throws InterruptedException, IOException {
@@ -49,6 +52,7 @@ public class MyTest {
 
         // 将歌曲重命名，按照 "-" 分割，歌手名字放前面，歌曲名称放后面
 //        soundRename();
+
 
     }
 
