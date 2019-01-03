@@ -33,7 +33,7 @@ public class MyTest {
     private static String pathImage = "D:\\Workspaces\\temp\\rename\\image";
 
     // 家里
-//    private static String pathP = "C:\\Users\\zhoubin\\Pictures\\壁纸";
+//    private static String pathP = "E:\\Other\\图片\\壁纸";
 //    private static String pathA = "E:\\Workspaces\\temp\\rename\\a";
 //    private static String pathB = "E:\\Workspaces\\temp\\rename\\b";
 //    private static String pathImage = "E:\\Workspaces\\temp\\rename\\image";
