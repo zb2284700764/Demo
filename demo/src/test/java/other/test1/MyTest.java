@@ -164,33 +164,33 @@ public class MyTest {
 
     private static void bzAll() throws InterruptedException {
 
-        FileUtil.deleteDirFile(pathA);
-        FileUtil.deleteDirFile(pathB);
-        FileUtil.deleteDirFile(pathImage);
-
-        FileUtil.createDir(pathA);
-        FileUtil.createDir(pathB);
-        FileUtil.createDir(pathImage);
-
-
-        step1(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
-        System.out.println("\n\n");
-        Thread.sleep(2000);
-
-        step2(); // 2 将a文件夹中的图片改名
-        System.out.println("\n\n");
-
-        step3(); // 3 删除 宽不为 1960 高不为 1080 的图片
-        System.out.println("\n\n");
-        Thread.sleep(2000);
-
-        step4(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
-        System.out.println("\n\n");
-        Thread.sleep(2000);
-
-        step5(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
-        System.out.println("\n\n");
-        Thread.sleep(2000);
+//        FileUtil.deleteDirFile(pathA);
+//        FileUtil.deleteDirFile(pathB);
+//        FileUtil.deleteDirFile(pathImage);
+//
+//        FileUtil.createDir(pathA);
+//        FileUtil.createDir(pathB);
+//        FileUtil.createDir(pathImage);
+//
+//
+//        step1(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
+//        System.out.println("\n\n");
+//        Thread.sleep(2000);
+//
+//        step2(); // 2 将a文件夹中的图片改名
+//        System.out.println("\n\n");
+//
+//        step3(); // 3 删除 宽不为 1960 高不为 1080 的图片
+//        System.out.println("\n\n");
+//        Thread.sleep(2000);
+//
+//        step4(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
+//        System.out.println("\n\n");
+//        Thread.sleep(2000);
+//
+//        step5(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
+//        System.out.println("\n\n");
+//        Thread.sleep(2000);
 
         step6(); // 6 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
 
@@ -526,6 +526,8 @@ public class MyTest {
             // entry.getValue()+", "+index);
         }
 
+        boolean isDeleted = false;
+
         for (int i = 0; i < valuesp.length; i++) {
 
             String fileIp = keysp[i];
@@ -538,6 +540,7 @@ public class MyTest {
 
                     if (valueIp.equals(vJp)) {
                         // 将相同的图片移动到另外一个目录
+                        isDeleted = true;
 
                         String fileNameIp = fileIp.substring(fileIp.lastIndexOf("\\") + 1, fileIp.lastIndexOf("."));
                         String fileNameJp = fileJp.substring(fileJp.lastIndexOf("\\") + 1, fileJp.lastIndexOf("."));
@@ -545,12 +548,30 @@ public class MyTest {
                         FileUtil.fileCopy(fileJp, pathA);
                         if (Integer.parseInt(fileNameJp) > Integer.parseInt(fileNameIp)) {
                             FileUtil.deleteDir(fileJp);
+                            mapp.remove(fileJp);
                         } else {
                             FileUtil.deleteDir(fileIp);
+                            mapp.remove(fileIp);
                         }
-                        System.out.println("相同的【" + fileNameIp + "、" + fileNameJp + "】");
+                        System.out.println("相同的【" + fileNameIp + "、" + fileNameJp + "】, 删除序号大的");
                     }
                 }
+            }
+        }
+
+        Map<String, String> newMap = new HashMap<>();
+        // 有删除的就需要重新更新 map 中的 md5 值
+        if (isDeleted) {
+            for (String str : mapp.keySet()) {
+                String key = str.substring(str.lastIndexOf("\\") + 1, str.lastIndexOf("."));
+                newMap.put(key, mapp.get(str));
+            }
+
+            String content = JsonMapper.toJsonString(newMap);
+            try {
+                FileUtil.writeToFileByByte(filePath, content);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
