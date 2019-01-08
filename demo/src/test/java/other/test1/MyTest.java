@@ -3,8 +3,8 @@ package other.test1;
 
 import com.common.mapper.JsonMapper;
 import com.common.util.FileUtil;
-import com.common.util.StringUtils;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -14,10 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MyTest {
 
@@ -52,8 +49,6 @@ public class MyTest {
 
         // 将歌曲重命名，按照 "-" 分割，歌手名字放前面，歌曲名称放后面
 //        soundRename();
-
-
     }
 
     /**
@@ -76,396 +71,6 @@ public class MyTest {
         }
     }
 
-    /**
-     * 就执行1、2步
-     * @throws InterruptedException
-     */
-    public static void bz12() throws InterruptedException {
-        moveToA(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
-
-        rename(); // 2 将a文件夹中的图片改名j
-
-    }
-
-    /**
-     * 从第四步开始，直接对比 a 文件夹和壁纸文件夹的图片
-     * @throws InterruptedException
-     */
-    public static void bz46() throws InterruptedException {
-        repeatFile2(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
-        System.out.println("\n\n");
-
-        moveToPicutre(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
-        System.out.println("\n\n");
-
-        repeatFile(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
-
-    }
-
-    public static void bzAll() throws InterruptedException {
-        FileUtil.createDir(pathA);
-        FileUtil.createDir(pathB);
-        FileUtil.createDir(pathImage);
-
-        moveToA(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
-        System.out.println("\n\n");
-
-        rename(); // 2 将a文件夹中的图片改名j
-        System.out.println("\n\n");
-
-        deleteWidthEq1080(); // 3 删除宽度为 1080 的图片
-        System.out.println("\n\n");
-
-        repeatFile2(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
-        System.out.println("\n\n");
-
-        moveToPicutre(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
-        System.out.println("\n\n");
-
-        repeatFile(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
-
-    }
-
-    /**
-     * 1 将系统文件夹里面的缓存图片复制到a文件夹
-     * C:\Users\zhoubin\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets
-     *
-     * @throws
-     * @Title moveToA (方法名)
-     * @require
-     * @author zhoubin(作者)
-     * @date 2017年5月24日 上午9:32:14
-     * @history
-     */
-    public static void moveToA() {
-        String path = "C:\\Users\\zhoubin\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets";
-
-        System.out.println("#########################################【 1 】#########################################");
-        System.out.println("开始\t将系统文件夹里面的缓存图片复制到a文件夹");
-        System.out.println(String.format("将 %s 文件夹下的图片移动到 %s 文件夹下", path, pathA));
-        FileUtil.fileCopy(path, pathA);
-        System.out.println("结束\t将系统文件夹里面的缓存图片复制到a文件夹");
-    }
-
-    /**
-     * 2 将a文件夹中的图片改名
-     *
-     * @throws @authorzhoubin(作者)
-     * @Title rename (方法名)
-     * @require
-     * @date 2017年4月5日 下午1:22:11
-     * @history
-     */
-    public static void rename() {
-        System.out.println("#########################################【 2 】#########################################");
-        System.out.println("开始\t将a文件夹中的图片改名");
-        System.out.println(String.format("将 %s 文件夹下的图片重命名", pathA));
-
-        // 文件改名字
-        File file = new File(pathA);
-        File[] fileArr = file.listFiles();
-
-        for (int i = 0; i < fileArr.length; i++) {
-            File f = fileArr[i];
-            String name = (i + 1) + ".jpg";
-            System.out.println(name);
-
-            f.renameTo(new File(pathA + File.separator + name));
-        }
-        System.out.println("结束\t将a文件夹中的图片改名");
-    }
-
-    /**
-     * 3 删除宽度为1080的图片
-     *
-     * @throws
-     * @Title deleteWidthEq1080 (方法名)
-     * @require
-     * @author zhoubin(作者)
-     * @date 2017年5月24日 上午9:32:03
-     * @history
-     */
-    public static void deleteWidthEq1080() {
-        System.out.println("#########################################【 3 】#########################################");
-        System.out.println("开始\t删除高不为1080和宽不为为1920的图片");
-        System.out.println(String.format("删除 %s 文件夹下宽度为 1080 的图片", pathA));
-        File filea = new File(pathA);
-        File[] fileArra = filea.listFiles();
-
-        for (File file : fileArra) {
-            try {
-                FileInputStream fileInputStream = new FileInputStream(file);
-                BufferedImage sourceImg = ImageIO.read(fileInputStream);
-                if (sourceImg == null) {
-                    file.delete();
-                } else {
-                    String name = file.getName();
-                    int width = sourceImg.getWidth();
-                    int height = sourceImg.getHeight();
-                    System.out.print(String.format("名称: %s, 宽: %s, 高: %s, %s B, %.1f KB \t\t", name, width, height, file.length(), file.length() / 1024.0));
-                    fileInputStream.close();
-
-                    if (width != 1920 && height != 1080) {
-                        System.out.print(String.format("%s, 新路径: %s", name, pathB + File.separator + name));
-                        file.renameTo(new File(pathB + File.separator + name));
-                    }
-                    System.out.println();
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("结束\t删除高不为1080和宽不为为1920的图片");
-
-    }
-
-    /**
-     * 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
-     *
-     * @throws @author zhoubin(作者)
-     * @Title repeatFile2 (方法名)
-     * @require
-     * @date 2017年4月2日 下午11:38:14
-     * @history
-     */
-    public static void repeatFile2() {
-        System.out.println("#########################################【 4 】#########################################");
-        System.out.println("开始\t对比壁纸和a文件夹中图片，将重复的移动到b文件夹");
-        System.out.println(String.format("对比壁纸 %s 文件夹和 %s 文件夹中图片，将重复的移动到 %s 文件夹", pathP, pathA, pathB));
-
-        File filep = new File(pathP);
-        File filea = new File(pathA);
-        Map<String, String> mapp = null;
-
-        // 先从文件中读取已经 md5 过的图片
-        boolean isWriteFile = false;
-        Map<String, String> newMap = Maps.newHashMap();
-        try {
-            if (FileUtil.existsFile(filePath)) {
-                String jsonStr = FileUtil.readFromFileByByte(filePath);
-                if (StringUtils.isNotBlank(jsonStr)) {
-                    mapp = (Map<String, String>) JsonMapper.fromJsonString(jsonStr, Map.class);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        // 图片文件夹
-        if (mapp == null) {
-            mapp = getDirMD5(filep, true);
-            isWriteFile = true;
-        }
-        // a 文件夹
-        Map<String, String> mapa = getDirMD5(filea, true);
-
-        String[] keysp = new String[mapp.values().size()];
-        String[] valuesp = new String[mapp.values().size()];
-        String[] keysa = new String[mapa.values().size()];
-        String[] valuesa = new String[mapa.values().size()];
-
-        // 将 map 的 key、value 转换成数组
-        int indexp = 0;
-        for (Map.Entry<String, String> entry : mapp.entrySet()) {
-            keysp[indexp] = entry.getKey();
-            valuesp[indexp] = entry.getValue();
-            indexp++;
-        }
-        int indexa = 0;
-        for (Map.Entry<String, String> entry : mapa.entrySet()) {
-            keysa[indexa] = entry.getKey();
-            valuesa[indexa] = entry.getValue();
-            indexa++;
-        }
-
-        for (int i = 0; i < valuesp.length; i++) {
-            String filepi = keysp[i];
-            String vpi = valuesp[i];
-            String fileNamepi;
-            if (isWriteFile) {
-                fileNamepi = filepi.substring(filepi.lastIndexOf("\\") + 1, filepi.lastIndexOf("."));
-            } else {
-                fileNamepi = filepi;
-            }
-            if (isWriteFile) {
-                newMap.put(fileNamepi, vpi);
-            }
-
-            for (int j = 0; j < valuesa.length; j++) {
-                String fileaj = keysa[j];
-                String vaj = valuesa[j];
-
-                if (vpi.equals(vaj)) {
-                    String fileNameaj = fileaj.substring(fileaj.lastIndexOf("\\") + 1, fileaj.lastIndexOf("."));
-                    System.out.println("相同的【" + fileNamepi + "、" + fileNameaj + "】");
-                    FileUtil.fileCopy(fileaj, pathB);
-                    FileUtil.deleteDir(fileaj);
-                }
-            }
-        }
-        if (isWriteFile) {
-            String content = JsonMapper.toJsonString(newMap);
-            try {
-                FileUtil.writeToFileByByte(filePath, content);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("结束\t对比壁纸和a文件夹中图片，将重复的移动到b文件夹");
-    }
-
-    /**
-     * 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
-     *
-     * @throws @author zhoubin(作者)
-     * @Title moveToPicutre (方法名)
-     * @require
-     * @date 2017年4月2日 下午11:40:03
-     * @history
-     */
-    public static void moveToPicutre() {
-        System.out.println("#########################################【 5 】#########################################");
-        System.out.println("开始\t将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片");
-        System.out.println(String.format("将 %s 文件夹中的图片移动到壁纸 %s 文件夹，同时移动到 %s 文件夹之后删除 %s 文件夹中的图片", pathA, pathP, pathImage, pathA));
-
-        File filea = new File(pathA);
-        File[] fileArra = filea.listFiles();
-
-        File fileP = new File(pathP);
-        int indexp = fileP.listFiles().length;
-
-        for (int i = 0; i < fileArra.length; i++) {
-            File fa = fileArra[i];
-            String namea = (i + indexp - length) + ".jpg";
-
-            fa.renameTo(new File(pathImage + File.separator + namea));
-            FileUtil.fileCopy(pathImage, pathP);
-            // FileUtil.fileCopy(pathA, pathImage);
-            FileUtil.deleteDir(fa + File.separator + namea);
-        }
-
-
-
-        // 将新的图片md5信息写入文件中
-        System.out.println("开始\t将新增的图片md5信息追加到集合中");
-        Map<String, String> newMap = null;
-
-        System.out.println(filePath);
-        try {
-            if (FileUtil.existsFile(filePath)) {
-                String jsonStr = FileUtil.readFromFileByByte(filePath);
-                newMap = (Map<String, String>) JsonMapper.fromJsonString(jsonStr, Map.class);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // 读取image 文件夹下的图片 md5 信息
-        File fileImage = new File(pathImage);
-        Map<String, String> mapImage = getDirMD5(fileImage, true);
-        if (mapImage != null && mapImage.size() > 0) {
-            String[] keysImage = new String[mapImage.values().size()];
-            String[] valuesImage = new String[mapImage.values().size()];
-
-            int indexImage = 0;
-            for (Map.Entry<String, String> entry : mapImage.entrySet()) {
-                keysImage[indexImage] = entry.getKey();
-                valuesImage[indexImage] = entry.getValue();
-                indexImage++;
-            }
-            for (int i = 0; i < valuesImage.length; i++) {
-                String fileImageI = keysImage[i];
-                String vImageI = valuesImage[i];
-                String fileNameImageI = fileImageI.substring(fileImageI.lastIndexOf("\\") + 1, fileImageI.lastIndexOf("."));
-                newMap.put(fileNameImageI, vImageI);
-            }
-        }
-
-        // 将map中的key排序
-//        newMap = newMap
-//                .entrySet()
-//                .stream()
-//                .sorted(Map.Entry.<String, String>comparingByValue().reversed())
-//                .collect(Collectors.toMap(c -> c.getKey(), c -> c.getValue()));
-
-        String content = JsonMapper.toJsonString(newMap);
-        try {
-            FileUtil.writeToFileByByte(filePath, content);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("结束\t将新增的图片md5信息追加到集合中");
-
-        System.out.println("结束\t将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片");
-    }
-
-    /**
-     * 6 将壁纸文件中重复的图片移动到a文件夹
-     *
-     * @throws @author zhoubin(作者)
-     * @Title repeatFile (方法名)
-     * @require
-     * @date 2017年3月29日 下午2:57:37
-     * @history
-     */
-    public static void repeatFile() {
-        System.out.println("#########################################【 6 】#########################################");
-        System.out.println("开始\t将壁纸文件中重复的图片移动到a文件夹");
-        System.out.println(String.format("将壁纸 %s 文件夹中重复的图片移动到 %s 文件夹", pathP, pathA));
-
-        File filep = new File(pathP);
-        Map<String, String> mapp = getDirMD5(filep, true);
-
-        String[] keysp = new String[mapp.values().size()];
-        String[] valuesp = new String[mapp.values().size()];
-        int index = 0;
-
-        for (Map.Entry<String, String> entryp : mapp.entrySet()) {
-            keysp[index] = entryp.getKey();
-            valuesp[index] = entryp.getValue();
-            index++;
-            // System.out.println("Key = " + entry.getKey() + ", Value = " +
-            // entry.getValue()+", "+index);
-        }
-
-        for (int i = 0; i < valuesp.length; i++) {
-
-            String fileIp = keysp[i];
-            String valueIp = valuesp[i];
-
-            for (int j = (i + 1); j < valuesp.length; j++) {
-                if ((i + 1) <= valuesp.length) {
-                    String fileJp = keysp[j];
-                    String vJp = valuesp[j];
-
-                    if (valueIp.equals(vJp)) {
-                        // 将相同的图片移动到另外一个目录
-
-                        String fileNameIp = fileIp.substring(fileIp.lastIndexOf("\\") + 1, fileIp.lastIndexOf("."));
-                        String fileNameJp = fileJp.substring(fileJp.lastIndexOf("\\") + 1, fileJp.lastIndexOf("."));
-                        FileUtil.fileCopy(fileIp, pathA);
-                        FileUtil.fileCopy(fileJp, pathA);
-                        if (Integer.parseInt(fileNameJp) > Integer.parseInt(fileNameIp)) {
-                            FileUtil.deleteDir(fileJp);
-                        } else {
-                            FileUtil.deleteDir(fileIp);
-                        }
-                        // FileUtil.fileCopy(pathj,
-                        // pathB+File.separator+fileNamei.substring(0,
-                        // fileNamei.lastIndexOf("."))+"-"+fileNamej);
-
-                        System.out.println("相同的【" + fileNameIp + "、" + fileNameJp + "】");
-                        System.out.println(fileJp);
-                    }
-                }
-            }
-        }
-
-        System.out.println("结束\t将壁纸文件中重复的图片移动到a文件夹");
-    }
 
     /**
      * 将a文件夹中的图片按照名字排序，如果有空档的图片就将当前图片的名称按顺序修改
@@ -529,16 +134,431 @@ public class MyTest {
 
     }
 
+
+
+    /**
+     * 就执行1、2步
+     * @throws InterruptedException
+     */
+    public static void bz12() throws InterruptedException {
+        step1(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
+
+        step2(); // 2 将a文件夹中的图片改名j
+
+    }
+
+    /**
+     * 从第四步开始，直接对比 a 文件夹和壁纸文件夹的图片
+     * @throws InterruptedException
+     */
+    public static void bz46() throws InterruptedException {
+        step4(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
+        System.out.println("\n\n");
+
+        step5(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
+        System.out.println("\n\n");
+
+        step6(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
+
+    }
+
+    private static void bzAll() throws InterruptedException {
+
+        FileUtil.deleteDirFile(pathA);
+        FileUtil.deleteDirFile(pathB);
+        FileUtil.deleteDirFile(pathImage);
+
+        FileUtil.createDir(pathA);
+        FileUtil.createDir(pathB);
+        FileUtil.createDir(pathImage);
+
+
+        step1(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
+        System.out.println("\n\n");
+        Thread.sleep(2000);
+
+        step2(); // 2 将a文件夹中的图片改名
+        System.out.println("\n\n");
+
+        step3(); // 3 删除 宽不为 1960 高不为 1080 的图片
+        System.out.println("\n\n");
+        Thread.sleep(2000);
+
+        step4(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
+        System.out.println("\n\n");
+        Thread.sleep(2000);
+
+        step5(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
+        System.out.println("\n\n");
+        Thread.sleep(2000);
+
+        step6(); // 6 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
+
+    }
+
+
+
+
+
+    /**
+     * 1 将系统文件夹里面的缓存图片复制到a文件夹
+     * C:\Users\zhoubin\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets
+     */
+    private static void step1() {
+        String path = "C:\\Users\\zhoubin\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets";
+
+        System.out.println("###########【1、移动 Assets 下面所有的文件到 a 文件夹】###########");
+        System.out.println(String.format("Assets:[%s]", path));
+        System.out.println(String.format("a:[%s]", pathA));
+        System.out.println("开始");
+        System.out.println(String.format("将 %s 文件夹下的图片移动到 %s 文件夹下", path, pathA));
+        FileUtil.fileCopy(path, pathA);
+        System.out.println("结束");
+    }
+
+    /**
+     * 2 将a文件夹中的图片改名
+     */
+    private static void step2() {
+        System.out.println("###########【2、修改 a 文件夹下文件的后缀名】###########");
+        System.out.println(String.format("a:[%s]", pathA));
+        System.out.println("开始");
+
+        // 文件改名字
+        File file = new File(pathA);
+        File[] fileArr = file.listFiles();
+
+        assert fileArr != null;
+        for (int i = 0; i < fileArr.length; i++) {
+            File f = fileArr[i];
+            String name = (i + 1) + ".jpg";
+            System.out.println(String.format("将 [%s] 文件修改名称为 [%s]", pathA, pathA + File.separator + name));
+            f.renameTo(new File(pathA + File.separator + name));
+        }
+        System.out.println("结束");
+    }
+
+    /**
+     * 3 删除 宽不为 1960 高不为 1080 的图片
+     */
+    private static void step3() {
+        System.out.println("###########【3、删除 a 文件夹下 高不为 1080 宽不为为 1920 的图片】###########");
+        System.out.println(String.format("a:[%s]", pathA));
+        System.out.println("开始");
+        File filea = new File(pathA);
+        File[] fileArra = filea.listFiles();
+
+        assert fileArra != null;
+        for (File file : fileArra) {
+            try {
+                FileInputStream fileInputStream = new FileInputStream(file);
+                BufferedImage sourceImg = ImageIO.read(fileInputStream);
+                if (sourceImg == null) {
+                    file.delete();
+                } else {
+                    String name = file.getName();
+                    int width = sourceImg.getWidth();
+                    int height = sourceImg.getHeight();
+                    System.out.print(String.format("名称: %s, 宽: %s, 高: %s, %s B, %.1f KB \t\t", name, width, height, file.length(), file.length() / 1024.0));
+                    fileInputStream.close();
+                    Scanner scannerInput = new Scanner(System.in);
+
+                    boolean isMove = false;
+
+                    if (width != 1920 && height != 1080) {
+                        isMove = true;
+                    } else if (width == 1920 && height != 1080) {
+                        isMove = tip(name, width, height, scannerInput);
+//                    } else if (width != configWidth && height == configHeight) {
+                    } else if (width != 1920) {
+                        isMove = tip(name, width, height, scannerInput);
+                    }
+                    if (isMove) {
+                        System.out.print(String.format("从 [%s] 移动到: [%s]", file.getPath(), pathB + File.separator + name));
+                        file.renameTo(new File(pathB + File.separator + name));
+                        file.delete();
+                    }
+                    System.out.println();
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("结束");
+
+    }
+
+    private static boolean tip(String name, int width, int height, Scanner scannerInput) {
+        boolean isMove;
+        System.out.println(String.format("图片 [%s] 的宽度为 %s 高度为 [%s] 是否要保留(Y/N)?", name, width, height));
+        String str = scannerInput.next();
+        while (null == str) {
+            System.out.println("输入不能为空，请输入Y(是) 或者 N(否)");
+            str = scannerInput.next();
+        }
+        isMove = "N".equalsIgnoreCase(str) || "n".equalsIgnoreCase(str);
+        return isMove;
+    }
+
+    /**
+     * 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
+     */
+    private static void step4() {
+        System.out.println("###########【4、对比壁纸和 a 文件夹中图片，将重复的移动到 b 文件夹】###########");
+        System.out.println(String.format("壁纸:[%s]", pathP));
+        System.out.println(String.format("a:[%s]", pathA));
+        System.out.println(String.format("b:[%s]", pathB));
+        System.out.println("开始");
+
+        File filep = new File(pathP);
+        File filea = new File(pathA);
+
+        // 先从文件中读取已经 md5 过的图片
+        boolean isWriteFile = false;
+        Map<String, String> newMap = new HashMap<>();
+
+
+        Map<String, String> mappNew = null;
+        try {
+            if (FileUtil.existsFile(filePath)) {
+                String jsonStr = FileUtil.readFromFileByByte(filePath);
+                if (org.apache.commons.lang3.StringUtils.isNotBlank(jsonStr)) {
+                    mappNew = (Map<String, String>) JsonMapper.fromJsonString(jsonStr, Map.class);
+                } else {
+                    System.out.println(String.format("从 [%s] 中读取的内容为空",filePath));
+                }
+            } else {
+                System.out.println(String.format("在 [%s] 没有找到 map.txt 文件, map 集合为空", filePath));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 图片文件夹
+        if (mappNew == null) {
+            mappNew = getDirMD5(filep, true);
+            isWriteFile = true;
+        }
+
+
+        // a 文件夹
+        Map<String, String> mapa = getDirMD5(filea, true);
+
+        assert mappNew != null;
+        String[] keysp = new String[mappNew.values().size()];
+        String[] valuesp = new String[mappNew.values().size()];
+        assert mapa != null;
+        String[] keysa = new String[mapa.values().size()];
+        String[] valuesa = new String[mapa.values().size()];
+
+        // 将 map 的 key、value 转换成数组
+        int indexp = 0;
+        for (Map.Entry<String, String> entry : mappNew.entrySet()) {
+            keysp[indexp] = entry.getKey();
+            valuesp[indexp] = entry.getValue();
+            indexp++;
+        }
+        int indexa = 0;
+        for (Map.Entry<String, String> entry : mapa.entrySet()) {
+            keysa[indexa] = entry.getKey();
+            valuesa[indexa] = entry.getValue();
+            indexa++;
+        }
+
+        for (int i = 0; i < valuesp.length; i++) {
+            String filepi = keysp[i];
+            String vpi = valuesp[i];
+            String fileNamepi;
+            if (isWriteFile) {
+                fileNamepi = filepi.substring(filepi.lastIndexOf("\\") + 1, filepi.lastIndexOf("."));
+            } else {
+                fileNamepi = filepi;
+            }
+            if (isWriteFile) {
+                newMap.put(fileNamepi, vpi);
+            }
+
+            for (int j = 0; j < valuesa.length; j++) {
+                String fileaj = keysa[j];
+                String vaj = valuesa[j];
+
+                if (vpi.equals(vaj)) {
+                    String fileNameaj = fileaj.substring(fileaj.lastIndexOf("\\") + 1, fileaj.lastIndexOf("."));
+                    System.out.println("相同的【" + fileNamepi + "、" + fileNameaj + "】，将 "+fileaj+" 移动到 b 文件夹");
+                    FileUtil.fileCopy(fileaj, pathB);
+                    FileUtil.deleteDir(fileaj);
+                }
+            }
+        }
+        if (isWriteFile) {
+            String content = JsonMapper.toJsonString(newMap);
+            try {
+                FileUtil.writeToFileByByte(filePath, content);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("结束");
+    }
+
+    /**
+     * 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
+     */
+    private static void step5() {
+        System.out.println("###########【5、将 a 下面的图片移动到壁纸目录同时备份到 image 目录下 】###########");
+        System.out.println(String.format("壁纸:[%s]", pathP));
+        System.out.println(String.format("a:[%s]", pathA));
+        System.out.println(String.format("image:[%s]", pathImage));
+        System.out.println("开始");
+
+        File filea = new File(pathA);
+        File[] fileArra = filea.listFiles();
+
+        File fileP = new File(pathP);
+        int indexp = Objects.requireNonNull(fileP.listFiles()).length;
+
+        assert fileArra != null;
+        for (int i = 0; i < fileArra.length; i++) {
+            File fa = fileArra[i];
+            String namea = (i + indexp - length) + ".jpg";
+
+            fa.renameTo(new File(pathImage + File.separator + namea));
+            System.out.println(String.format("移动 [%s] 到 [%s]",fa+File.separator+namea, pathImage+File.separator+namea));
+            FileUtil.fileCopy(pathImage, pathP);
+            FileUtil.deleteDir(fa + File.separator + namea);
+        }
+        System.out.println("移动完成");
+
+
+        // 将新的图片md5信息写入文件中
+        System.out.println("将新增的图片md5信息追加到 map 中");
+        Map<String, String> mappNew = null;
+        try {
+            if (FileUtil.existsFile(filePath)) {
+                String jsonStr = FileUtil.readFromFileByByte(filePath);
+                if (StringUtils.isNotBlank(jsonStr)) {
+                    mappNew = (Map<String, String>) JsonMapper.fromJsonString(jsonStr, Map.class);
+                } else {
+                    System.out.println(String.format("从 [%s] 中读取的内容为空",filePath));
+                }
+            } else {
+                System.out.println(String.format("在 [%s] 没有找到 map.txt 文件, map 集合为空", filePath));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        // 读取image 文件夹下的图片 md5 信息
+        File fileImage = new File(pathImage);
+        Map<String, String> mapImage = getDirMD5(fileImage, true);
+
+        if (mapImage != null && mapImage.size() > 0) {
+            for (String str : mapImage.keySet()) {
+
+                System.out.println(String.format("追加的文件为 [%s]", str));
+
+                String key = str.substring(str.lastIndexOf("\\") + 1, str.lastIndexOf("."));
+                mappNew.put(key, mapImage.get(str));
+            }
+        }
+
+
+//        if (mapImage != null && mapImage.size() > 0) {
+//            String[] keysImage = new String[mapImage.values().size()];
+//            String[] valuesImage = new String[mapImage.values().size()];
+//
+//            int indexImage = 0;
+//            for (Map.Entry<String, String> entry : mapImage.entrySet()) {
+//                keysImage[indexImage] = entry.getKey();
+//                valuesImage[indexImage] = entry.getValue();
+//                indexImage++;
+//            }
+//            for (int i = 0; i < valuesImage.length; i++) {
+//                String fileImageI = keysImage[i];
+//                String vImageI = valuesImage[i];
+//                String fileNameImageI = fileImageI.substring(fileImageI.lastIndexOf("\\") + 1, fileImageI.lastIndexOf("."));
+//                assert mappNew != null;
+//                mappNew.put(fileNameImageI, vImageI);
+//            }
+//        }
+
+        // 将map中的key排序
+//        newMap = newMap
+//                .entrySet()
+//                .stream()
+//                .sorted(Map.Entry.<String, String>comparingByValue().reversed())
+//                .collect(Collectors.toMap(c -> c.getKey(), c -> c.getValue()));
+
+        String content = JsonMapper.toJsonString(mappNew);
+        try {
+            FileUtil.writeToFileByByte(filePath, content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("追加完成");
+        System.out.println("结束");
+    }
+
+    /**
+     * 6 将壁纸文件中重复的图片移动到a文件夹
+     */
+    private static void step6() {
+        System.out.println("###########【6、将壁纸文件夹中重复的图片挑出来移动到 a 文件夹中】###########");
+        System.out.println(String.format("壁纸:[%s]", pathP));
+        System.out.println(String.format("a:[%s]", pathA));
+        System.out.println("开始");
+
+        File filep = new File(pathP);
+        Map<String, String> mapp = getDirMD5(filep, true);
+
+        assert mapp != null;
+        String[] keysp = new String[mapp.values().size()];
+        String[] valuesp = new String[mapp.values().size()];
+        int index = 0;
+
+        for (Map.Entry<String, String> entryp : mapp.entrySet()) {
+            keysp[index] = entryp.getKey();
+            valuesp[index] = entryp.getValue();
+            index++;
+            // System.out.println("Key = " + entry.getKey() + ", Value = " +
+            // entry.getValue()+", "+index);
+        }
+
+        for (int i = 0; i < valuesp.length; i++) {
+
+            String fileIp = keysp[i];
+            String valueIp = valuesp[i];
+
+            for (int j = (i + 1); j < valuesp.length; j++) {
+                if ((i + 1) <= valuesp.length) {
+                    String fileJp = keysp[j];
+                    String vJp = valuesp[j];
+
+                    if (valueIp.equals(vJp)) {
+                        // 将相同的图片移动到另外一个目录
+
+                        String fileNameIp = fileIp.substring(fileIp.lastIndexOf("\\") + 1, fileIp.lastIndexOf("."));
+                        String fileNameJp = fileJp.substring(fileJp.lastIndexOf("\\") + 1, fileJp.lastIndexOf("."));
+                        FileUtil.fileCopy(fileIp, pathA);
+                        FileUtil.fileCopy(fileJp, pathA);
+                        if (Integer.parseInt(fileNameJp) > Integer.parseInt(fileNameIp)) {
+                            FileUtil.deleteDir(fileJp);
+                        } else {
+                            FileUtil.deleteDir(fileIp);
+                        }
+                        System.out.println("相同的【" + fileNameIp + "、" + fileNameJp + "】");
+                    }
+                }
+            }
+        }
+
+        System.out.println("结束");
+    }
+
     /**
      * 获取单个文件的MD5值！
-     *
-     * @param file
-     * @return
-     * @throws @author zhoubin(作者)
-     * @Title getFileMD5 (方法名)
-     * @require
-     * @date 2017年3月29日 下午2:57:28
-     * @history
      */
     private static String getFileMD5(File file) {
         if (!file.isFile()) {
@@ -546,7 +566,7 @@ public class MyTest {
         }
         MessageDigest digest = null;
         FileInputStream in = null;
-        byte buffer[] = new byte[1024];
+        byte[] buffer = new byte[1024];
         int len;
         try {
             digest = MessageDigest.getInstance("MD5");
@@ -568,12 +588,6 @@ public class MyTest {
      *
      * @param file
      * @param listChild
-     * @return
-     * @throws @author zhoubin(作者)
-     * @Title getDirMD5 (方法名)
-     * @require
-     * @date 2017年3月29日 下午2:57:06
-     * @history
      */
     private static Map<String, String> getDirMD5(File file, boolean listChild) {
         if (!file.isDirectory()) {
@@ -581,12 +595,12 @@ public class MyTest {
         }
         Map<String, String> map = new HashMap<>();
         String md5;
-        File files[] = file.listFiles();
+        File[] files = file.listFiles();
 
-        for (int i = 0; i < files.length; i++) {
-            File f = files[i];
+        assert files != null;
+        for (File f : files) {
             if (f.isDirectory() && listChild) {
-                map.putAll(getDirMD5(f, listChild));
+                map.putAll(Objects.requireNonNull(getDirMD5(f, listChild)));
             } else {
                 md5 = getFileMD5(f);
                 if (md5 != null) {
