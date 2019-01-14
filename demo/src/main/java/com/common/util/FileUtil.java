@@ -379,12 +379,31 @@ public class FileUtil {
 		boolean bo = false;
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
-			for (int i = 0; i < files.length; i++) {
-				deleteDir(files[i].getPath());
+			assert files != null;
+			for (File file1 : files) {
+				deleteDir(file1.getPath());
 			}
 			file.delete();
 		} else {
 			bo = file.delete();
+		}
+		return bo;
+	}
+
+	/**
+	 * 删除文件夹下的所有文件
+	 * @param path
+	 * @return
+	 */
+	public static boolean deleteDirFile(String path) {
+		File file = new File(path);
+		boolean bo = false;
+		if (file.exists() && file.isDirectory()) {
+			File[] files = file.listFiles();
+			assert files != null;
+			for (File file1 : files) {
+				deleteDir(file1.getPath());
+			}
 		}
 		return bo;
 	}
