@@ -18,16 +18,16 @@ import java.util.*;
 
 public class MyTest {
 
-    private static int length = 44;
-    private static String filePath = System.getProperty("user.dir") + File.separator + "demo" + File.separator + "src" + File.separator + "test" +
-                                     File.separator + "java" + File.separator + "other" + File.separator + "test1" + File.separator + "map.txt";
+//    private static int length = 44;
+//    private static String filePath = System.getProperty("user.dir") + File.separator + "demo" + File.separator + "src" + File.separator + "test" +
+//                                     File.separator + "java" + File.separator + "other" + File.separator + "test1" + File.separator + "map.txt";
 
 
     // 公司
-    private static String pathP = "C:\\Users\\zhoubin\\Pictures\\壁纸";
-    private static String pathA = "D:\\Workspaces\\temp\\rename\\a";
-    private static String pathB = "D:\\Workspaces\\temp\\rename\\b";
-    private static String pathImage = "D:\\Workspaces\\temp\\rename\\image";
+//    private static String pathP = "C:\\Users\\zhoubin\\Pictures\\壁纸";
+//    private static String pathA = "D:\\Workspaces\\temp\\rename\\a";
+//    private static String pathB = "D:\\Workspaces\\temp\\rename\\b";
+//    private static String pathImage = "D:\\Workspaces\\temp\\rename\\image";
 
     // 家里
 //    private static String pathP = "E:\\Other\\图片\\壁纸";
@@ -36,13 +36,35 @@ public class MyTest {
 //    private static String pathImage = "E:\\Workspaces\\temp\\rename\\image";
 
 
+    private static String pathP;
+    private static String pathA;
+    private static String pathB;
+    private static String pathImage;
+    private static String mapTxtPath;
+
+    static{
+        System.out.println(System.getProperty("user.dir"));
+        // 初始化路径
+        boolean isCompany = Boolean.parseBoolean(PropertiesUtil.getConfig("isCompany"));
+        if (isCompany) {
+            pathP = PropertiesUtil.getConfig("company.pathP");
+            pathA = PropertiesUtil.getConfig("company.pathA");
+            pathB = PropertiesUtil.getConfig("company.pathB");
+            pathImage = PropertiesUtil.getConfig("company.pathImage");
+            mapTxtPath = PropertiesUtil.getConfig("company.map.txt.path");
+        } else {
+            pathP = PropertiesUtil.getConfig("home.pathP");
+            pathA = PropertiesUtil.getConfig("home.pathA");
+            pathB = PropertiesUtil.getConfig("home.pathB");
+            pathImage = PropertiesUtil.getConfig("home.pathImage");
+            mapTxtPath = PropertiesUtil.getConfig("home.map.txt.path");
+        }
+    }
 
 
     public static void main(String[] args) throws InterruptedException, IOException {
         // 复制壁纸
         bzAll();
-//        bz12();
-//        bz46();
 
         // 将图片按照文件名排序
 //		sortA();
@@ -134,63 +156,36 @@ public class MyTest {
 
     }
 
+    private static void bzAll() throws InterruptedException {
+
+        FileUtil.deleteDirFile(pathA);
+        FileUtil.deleteDirFile(pathB);
+        FileUtil.deleteDirFile(pathImage);
+
+        FileUtil.createDir(pathA);
+        FileUtil.createDir(pathB);
+        FileUtil.createDir(pathImage);
 
 
-    /**
-     * 就执行1、2步
-     * @throws InterruptedException
-     */
-    public static void bz12() throws InterruptedException {
         step1(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
+        System.out.println("\n\n");
+        Thread.sleep(2000);
 
-        step2(); // 2 将a文件夹中的图片改名j
+        step2(); // 2 将a文件夹中的图片改名
+        System.out.println("\n\n");
+        Thread.sleep(2000);
 
-    }
+        step3(); // 3 删除 宽不为 1960 高不为 1080 的图片
+        System.out.println("\n\n");
+        Thread.sleep(2000);
 
-    /**
-     * 从第四步开始，直接对比 a 文件夹和壁纸文件夹的图片
-     * @throws InterruptedException
-     */
-    public static void bz46() throws InterruptedException {
         step4(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
         System.out.println("\n\n");
+        Thread.sleep(2000);
 
         step5(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
         System.out.println("\n\n");
-
-        step6(); // [6] 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
-
-    }
-
-    private static void bzAll() throws InterruptedException {
-
-//        FileUtil.deleteDirFile(pathA);
-//        FileUtil.deleteDirFile(pathB);
-//        FileUtil.deleteDirFile(pathImage);
-//
-//        FileUtil.createDir(pathA);
-//        FileUtil.createDir(pathB);
-//        FileUtil.createDir(pathImage);
-//
-//
-//        step1(); // 1 将系统 Assets 文件夹下面的图片异动到 a 文件夹
-//        System.out.println("\n\n");
-//        Thread.sleep(2000);
-//
-//        step2(); // 2 将a文件夹中的图片改名
-//        System.out.println("\n\n");
-//
-//        step3(); // 3 删除 宽不为 1960 高不为 1080 的图片
-//        System.out.println("\n\n");
-//        Thread.sleep(2000);
-//
-//        step4(); // 4 对比壁纸和a文件夹中图片，将重复的移动到b文件夹
-//        System.out.println("\n\n");
-//        Thread.sleep(2000);
-//
-//        step5(); // 5 将a文件夹中的图片移动到壁纸文件夹，同时移动到image文件夹之后删除a文件夹中的图片
-//        System.out.println("\n\n");
-//        Thread.sleep(2000);
+        Thread.sleep(2000);
 
         step6(); // 6 将壁纸文件夹中重复的图片移动到a文件夹中,并删除壁纸文件夹中名称靠后的图片
 
@@ -205,7 +200,8 @@ public class MyTest {
      * C:\Users\zhoubin\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets
      */
     private static void step1() {
-        String path = "C:\\Users\\zhoubin\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets";
+//        String path = "C:\\Users\\zhoubin\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets";
+        String path = PropertiesUtil.getConfig("pathc");
 
         System.out.println("###########【1、移动 Assets 下面所有的文件到 a 文件夹】###########");
         System.out.println(String.format("Assets:[%s]", path));
@@ -261,22 +257,26 @@ public class MyTest {
                     int height = sourceImg.getHeight();
                     System.out.print(String.format("名称: %s, 宽: %s, 高: %s, %s B, %.1f KB \t\t", name, width, height, file.length(), file.length() / 1024.0));
                     fileInputStream.close();
+                    // 默认宽度为 1920
+                    int configWidth = Integer.parseInt(PropertiesUtil.getConfig("picture.width"));
+                    // 默认高度为 1080
+                    int configHeight = Integer.parseInt(PropertiesUtil.getConfig("picture.height"));
+
                     Scanner scannerInput = new Scanner(System.in);
 
                     boolean isMove = false;
 
-                    if (width != 1920 && height != 1080) {
+                    if (width != configWidth && height != configHeight) {
                         isMove = true;
-                    } else if (width == 1920 && height != 1080) {
+                    } else if (width == configWidth && height != configHeight) {
                         isMove = tip(name, width, height, scannerInput);
 //                    } else if (width != configWidth && height == configHeight) {
-                    } else if (width != 1920) {
+                    } else if (width != configWidth) {
                         isMove = tip(name, width, height, scannerInput);
                     }
                     if (isMove) {
                         System.out.print(String.format("从 [%s] 移动到: [%s]", file.getPath(), pathB + File.separator + name));
                         file.renameTo(new File(pathB + File.separator + name));
-                        file.delete();
                     }
                     System.out.println();
                 }
@@ -322,15 +322,15 @@ public class MyTest {
 
         Map<String, String> mappNew = null;
         try {
-            if (FileUtil.existsFile(filePath)) {
-                String jsonStr = FileUtil.readFromFileByByte(filePath);
-                if (org.apache.commons.lang3.StringUtils.isNotBlank(jsonStr)) {
+            if (FileUtil.existsFile(mapTxtPath)) {
+                String jsonStr = FileUtil.readFromFileByByte(mapTxtPath);
+                if (StringUtils.isNotBlank(jsonStr)) {
                     mappNew = (Map<String, String>) JsonMapper.fromJsonString(jsonStr, Map.class);
                 } else {
-                    System.out.println(String.format("从 [%s] 中读取的内容为空",filePath));
+                    System.out.println(String.format("从 [%s] 中读取的内容为空", mapTxtPath));
                 }
             } else {
-                System.out.println(String.format("在 [%s] 没有找到 map.txt 文件, map 集合为空", filePath));
+                System.out.println(String.format("在 [%s] 没有找到 map.txt 文件, map 集合为空", mapTxtPath));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -385,7 +385,7 @@ public class MyTest {
 
                 if (vpi.equals(vaj)) {
                     String fileNameaj = fileaj.substring(fileaj.lastIndexOf("\\") + 1, fileaj.lastIndexOf("."));
-                    System.out.println("相同的【" + fileNamepi + "、" + fileNameaj + "】，将 "+fileaj+" 移动到 b 文件夹");
+                    System.out.println("相同的【" + fileNamepi + "、" + fileNameaj + "】，将 " + fileaj + " 移动到 b 文件夹");
                     FileUtil.fileCopy(fileaj, pathB);
                     FileUtil.deleteDir(fileaj);
                 }
@@ -394,7 +394,7 @@ public class MyTest {
         if (isWriteFile) {
             String content = JsonMapper.toJsonString(newMap);
             try {
-                FileUtil.writeToFileByByte(filePath, content);
+                FileUtil.writeToFileByByte(mapTxtPath, content);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -421,10 +421,12 @@ public class MyTest {
         assert fileArra != null;
         for (int i = 0; i < fileArra.length; i++) {
             File fa = fileArra[i];
+            int length = Integer.parseInt(PropertiesUtil.getConfig("length"));
+
             String namea = (i + indexp - length) + ".jpg";
 
             fa.renameTo(new File(pathImage + File.separator + namea));
-            System.out.println(String.format("移动 [%s] 到 [%s]",fa+File.separator+namea, pathImage+File.separator+namea));
+            System.out.println(String.format("移动 [%s] 到 [%s]", fa + File.separator + namea, pathImage + File.separator + namea));
             FileUtil.fileCopy(pathImage, pathP);
             FileUtil.deleteDir(fa + File.separator + namea);
         }
@@ -435,15 +437,15 @@ public class MyTest {
         System.out.println("将新增的图片md5信息追加到 map 中");
         Map<String, String> mappNew = null;
         try {
-            if (FileUtil.existsFile(filePath)) {
-                String jsonStr = FileUtil.readFromFileByByte(filePath);
+            if (FileUtil.existsFile(mapTxtPath)) {
+                String jsonStr = FileUtil.readFromFileByByte(mapTxtPath);
                 if (StringUtils.isNotBlank(jsonStr)) {
                     mappNew = (Map<String, String>) JsonMapper.fromJsonString(jsonStr, Map.class);
                 } else {
-                    System.out.println(String.format("从 [%s] 中读取的内容为空",filePath));
+                    System.out.println(String.format("从 [%s] 中读取的内容为空", mapTxtPath));
                 }
             } else {
-                System.out.println(String.format("在 [%s] 没有找到 map.txt 文件, map 集合为空", filePath));
+                System.out.println(String.format("在 [%s] 没有找到 map.txt 文件, map 集合为空", mapTxtPath));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -493,7 +495,7 @@ public class MyTest {
 
         String content = JsonMapper.toJsonString(mappNew);
         try {
-            FileUtil.writeToFileByByte(filePath, content);
+            FileUtil.writeToFileByByte(mapTxtPath, content);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -569,7 +571,7 @@ public class MyTest {
 
             String content = JsonMapper.toJsonString(newMap);
             try {
-                FileUtil.writeToFileByByte(filePath, content);
+                FileUtil.writeToFileByByte(mapTxtPath, content);
             } catch (Exception e) {
                 e.printStackTrace();
             }
